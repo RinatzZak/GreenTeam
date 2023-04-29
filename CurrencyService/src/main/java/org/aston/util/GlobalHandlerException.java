@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.persistence.EntityNotFoundException;
+
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -19,7 +19,6 @@ public class GlobalHandlerException {
      * Method that handles exception when entity wasn't found
      *
      * @param req request {@link HttpServletRequest}
-     * @param ex  exception {@link EntityNotFoundException}
      * @return {@link ResponseEntity}
      */
     @ExceptionHandler(CurrencyNotFoundException.class)
