@@ -1,9 +1,8 @@
 package org.aston.parser;
 
 import lombok.extern.log4j.Log4j;
-import org.aston.util.exception.CurrencyParsingException;
 import org.aston.model.Currency;
-import org.springframework.beans.factory.annotation.Value;
+import org.aston.util.exception.CurrencyParsingException;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,8 +16,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.io.StringReader;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +34,6 @@ public class ParseXMLImpl implements ParseXML {
         try {
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder db = dbf.newDocumentBuilder();
-            StringReader reader = new StringReader(parsePath);
             Document doc = db.parse(new InputSource(parsePath));
             doc.getDocumentElement().normalize();
 
