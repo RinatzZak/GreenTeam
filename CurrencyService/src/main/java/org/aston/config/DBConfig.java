@@ -3,20 +3,22 @@ package org.aston.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
 @Configuration
+@PropertySource(value = "classpath:application.properties")
 public class DBConfig {
 
-    @Value("${spring.database.driver-class-name}")
+    @Value("${db_driver}")
     private String driver;
-    @Value("${spring.database.username}")
+    @Value("${db_username}")
     private String userName;
-    @Value("${spring.database.passsword}")
+    @Value("${db_password}")
     private String password;
-    @Value("${spring.database.url}")
+    @Value("${db_url}")
     private String url;
 
     @Bean

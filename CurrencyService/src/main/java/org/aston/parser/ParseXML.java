@@ -5,5 +5,5 @@ import org.aston.model.Currency;
 import java.util.List;
 
 public interface ParseXML {
-    List<Currency> parseCurrenciesFromCBR();
+    List<Currency> parseCurrenciesFromCBR(String parsePath);
 }
