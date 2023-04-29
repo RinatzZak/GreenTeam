@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -16,6 +17,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,20 +26,19 @@ import java.util.List;
 @Component
 @Log4j
 public class ParseXMLImpl implements ParseXML {
-    @Value("${cbr.url}")
-    private String parsePath;
     private List<Currency> currencies = new ArrayList<>();
 
     @Override
-    public List<Currency> parseCurrenciesFromCBR() {
+    public List<Currency> parseCurrenciesFromCBR(String parsePath) {
         log.info("Begin parse currencies from cbr");
-        var dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
         dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
         try {
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new URL("https://cbr.ru/scripts/XML_daily.asp").openStream());
+            StringReader reader = new StringReader(parsePath);
+            Document doc = db.parse(new InputSource(parsePath));
             doc.getDocumentElement().normalize();
 
             NodeList nodeList = doc.getElementsByTagName("Valute");
