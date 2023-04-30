@@ -34,7 +34,7 @@ public class ParseXMLImpl implements ParseXML {
         try {
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new InputSource(parsePath));
+            Document doc = db.parse(new InputSource((parsePath)));
             doc.getDocumentElement().normalize();
 
             NodeList nodeList = doc.getElementsByTagName("Valute");
@@ -54,11 +54,9 @@ public class ParseXMLImpl implements ParseXML {
                     currencies.add(new Currency(numCode, charCode, nominal, name, value, localDate));
                 }
             }
-        } catch (ParserConfigurationException e) {
-            log.error("xml parsing error");
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            log.error("xml parsing error for url: {" + parsePath + "}");
             throw new CurrencyParsingException(e);
-        } catch (IOException | SAXException ex) {
-            throw new RuntimeException(ex);
         }
         return currencies;
     }

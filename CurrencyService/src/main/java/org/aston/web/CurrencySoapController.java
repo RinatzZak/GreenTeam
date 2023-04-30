@@ -17,6 +17,13 @@ public class CurrencySoapController {
 
     private final CurrencyService currencyService;
 
+
+    /**
+     * Method for getting currency by its char code
+     *
+     * @param charCode - incoming currency code
+     * @return {@link Currency}
+     */
     @WebMethod
     public Currency getByCharCode(String charCode) {
         log.info("start getByCharCode for - " + charCode);
@@ -24,6 +31,13 @@ public class CurrencySoapController {
     }
 
 
+    /**
+     * Method for converting from USD and EUR to rubles
+     *
+     * @param charCode - incoming currency code
+     * @param value    - incoming value for converting
+     * @return The string value of the conversion
+     */
     @WebMethod
     public String convertToRubFromAnother(String charCode, String value) {
         log.info("start convert to rub from " + charCode);
@@ -35,6 +49,14 @@ public class CurrencySoapController {
         return String.format("%.2f", response);
     }
 
+
+    /**
+     * Method for converting from RUB to EUR or USD
+     *
+     * @param charCode   - incoming currency code
+     * @param valueOfRub - incoming value for converting
+     * @return The string value of the conversion
+     */
     @WebMethod
     public String convertToUSDOrEURFromRub(String charCode, String valueOfRub) {
         log.info("start convert to " + charCode + " from rub");
