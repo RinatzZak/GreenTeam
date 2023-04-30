@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+
+  goal-server:
+    build: goal-service
+    image: goal-service
+    container_name: goal-server
+    depends_on:
+      - goal-db
+    ports:
+      - "9090:9090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://goal-db:5432/goal-db
+
+
+  goal-db:
+    image: postgres:14-alpine
+    container_name: goal-db
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=goal-db
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+
