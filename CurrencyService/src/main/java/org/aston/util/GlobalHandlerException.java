@@ -3,11 +3,12 @@ package org.aston.util;
 import lombok.extern.slf4j.Slf4j;
 import org.aston.util.exception.BadRequestForCharCodeException;
 import org.aston.util.exception.CurrencyNotFoundException;
+import org.aston.util.exception.GetCurrencyException;
+import org.aston.util.exception.SaveAllException;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -37,9 +38,34 @@ public class GlobalHandlerException {
      */
     @ExceptionHandler(CurrencyNotFoundException.class)
     public ResponseEntity<ErrorInfo> handleBadRequestForCharCodeException(HttpServletRequest req,
-                                                                     BadRequestForCharCodeException ex) {
+                                                                          BadRequestForCharCodeException ex) {
         return logAndGetErrorInfo(req, ex, ErrorType.BAD_CHAR_CODE);
     }
+
+    /**
+     * Method that handles exception when getCurrency is bad operation
+     *
+     * @param req request {@link HttpServletRequest}
+     * @return {@link ResponseEntity}
+     */
+    @ExceptionHandler(GetCurrencyException.class)
+    public ResponseEntity<ErrorInfo> handleGetCurrencyException(HttpServletRequest req,
+                                                                GetCurrencyException ex) {
+        return logAndGetErrorInfo(req, ex, ErrorType.BAD_CHAR_CODE);
+    }
+
+    /**
+     * Method that handles exception when saveAll is bad operation
+     *
+     * @param req request {@link HttpServletRequest}
+     * @return {@link ResponseEntity}
+     */
+    @ExceptionHandler(SaveAllException.class)
+    public ResponseEntity<ErrorInfo> handleSaveAllException(HttpServletRequest req,
+                                                            SaveAllException ex) {
+        return logAndGetErrorInfo(req, ex, ErrorType.BAD_CHAR_CODE);
+    }
+
 
     private ResponseEntity<ErrorInfo> logAndGetErrorInfo(HttpServletRequest req, Exception e, ErrorType errorType) {
         Throwable rootCause = Optional.ofNullable(NestedExceptionUtils.getRootCause(e)).orElse(e);

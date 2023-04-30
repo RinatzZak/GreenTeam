@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -13,7 +12,10 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "currencies")
+@Table(name = "currencies", uniqueConstraints = {
+        @UniqueConstraint(name = "uc_currency_dateofcreation", columnNames = {"dateOfCreation"})
+})
+@EqualsAndHashCode
 public class Currency {
 
     @Id
@@ -35,7 +37,7 @@ public class Currency {
     @Column(name = "value")
     private String value;
 
-    @Column(name = "dateOfCreation")
+    @Column(name = "dateOfCreation", unique = true)
     private LocalDate dateOfCreation;
 
     public Currency(String numCode, String charCode, String nominal,
@@ -46,18 +48,5 @@ public class Currency {
         this.name = name;
         this.value = value;
         this.dateOfCreation = dateOfCreation;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Currency currency = (Currency) o;
-        return id != null && Objects.equals(id, currency.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }
