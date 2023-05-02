@@ -12,6 +12,7 @@
         <module>CurrencyService</module>
         <module>goal-service</module>
         <module>SavingService</module>
+        <module>GreenTeamTelegramBot</module>
     </modules>
 
     <properties>
