@@ -1,3 +1,3 @@
-FROM amazoncorretto:11-alpine-jdk
-COPY *.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM openjdk:11
+COPY target/goal-service-1.0-SNAPSHOT.jar goal.jar
+ENTRYPOINT ["java", "-jar", "/goal.jar"]

@@ -12,9 +12,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "currencies", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_currency_dateofcreation", columnNames = {"dateOfCreation"})
-})
+@Table(name = "currencies")
 @EqualsAndHashCode
 public class Currency {
 
@@ -37,7 +35,7 @@ public class Currency {
     @Column(name = "value")
     private String value;
 
-    @Column(name = "dateOfCreation", unique = true)
+    @Column(name = "dateOfCreation")
     private LocalDate dateOfCreation;
 
     public Currency(String numCode, String charCode, String nominal,
