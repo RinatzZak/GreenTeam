@@ -15,14 +15,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CurrencySoapControllerTest {
+class CurrencySoapControllerImplTest {
 
     @Mock
     private CurrencyService currencyService;
 
 
     @InjectMocks
-    private CurrencySoapController currencySoapController;
+    private CurrencySoapControllerImpl currencySoapControllerImpl;
 
 
     @Test
@@ -33,7 +33,7 @@ class CurrencySoapControllerTest {
         currency.setValue("74,2");
         when(currencyService.getByCharCode(charCode)).thenReturn(currency);
 
-        Currency result = currencySoapController.getByCharCode(charCode);
+        Currency result = currencySoapControllerImpl.getByCharCode(charCode);
 
         assertEquals(currency, result);
         verify(currencyService).getByCharCode(charCode);
@@ -48,7 +48,7 @@ class CurrencySoapControllerTest {
         currency.setValue("74,2");
         when(currencyService.getByCharCode(charCode)).thenReturn(currency);
 
-        String result = currencySoapController.convertToRubFromAnother(charCode, value);
+        String result = currencySoapControllerImpl.convertToRubFromAnother(charCode, value);
 
         assertEquals("7420.00", result.replace(",", "."));
         verify(currencyService).getByCharCode(charCode);
@@ -63,7 +63,7 @@ class CurrencySoapControllerTest {
         currency.setValue("74,2");
         when(currencyService.getByCharCode(charCode)).thenReturn(currency);
 
-        String result = currencySoapController.convertToUSDOrEURFromRub(charCode, valueOfRub);
+        String result = currencySoapControllerImpl.convertToUSDOrEURFromRub(charCode, valueOfRub);
 
         assertEquals("100.00", result.replace(",", "."));
         verify(currencyService).getByCharCode(charCode);
@@ -75,6 +75,6 @@ class CurrencySoapControllerTest {
         String charCode = "invalid";
         String valueOfRub = "7420.00";
 
-        assertThrows(BadRequestForCharCodeException.class, () -> currencySoapController.convertToUSDOrEURFromRub(charCode, valueOfRub));
+        assertThrows(BadRequestForCharCodeException.class, () -> currencySoapControllerImpl.convertToUSDOrEURFromRub(charCode, valueOfRub));
     }
 }
