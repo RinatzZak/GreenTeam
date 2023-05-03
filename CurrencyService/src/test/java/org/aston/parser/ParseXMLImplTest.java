@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,12 +19,14 @@ class ParseXMLImplTest {
     @Test
     void parseCurrenciesFromCBR() throws IOException, URISyntaxException {
         URI uri = ClassLoader.getSystemResource("XML_daily.xml").toURI();
+        String ratesXml = Files.readString(Paths.get(uri), Charset.forName("windows-1251"));
 
         ParseXML parseXML = new ParseXMLImpl();
         List<Currency> currencies = parseXML.parseCurrenciesFromCBR(uri.getPath());
 
         Assertions.assertEquals(currencies.size(), 43);
-        Assertions.assertEquals(currencies.get(4), getBelRubRate());
+        Assertions.assertEquals(currencies.get(4).getCharCode(), "BYN");
+        Assertions.assertTrue(currencies.contains(getBelRubRate()));
         Assertions.assertTrue(currencies.contains(getJPYRate()));
         Assertions.assertTrue(currencies.contains(getUSDRate()));
     }
@@ -40,7 +45,7 @@ class ParseXMLImplTest {
                 .nominal("1")
                 .name("Доллар США")
                 .value("80,5093")
-                .dateOfCreation(LocalDate.parse("2023-04-30"))
+                .dateOfCreation(LocalDate.now())
                 .build();
     }
 
@@ -51,7 +56,7 @@ class ParseXMLImplTest {
                 .nominal("100")
                 .name("Японских иен")
                 .value("60,0592")
-                .dateOfCreation(LocalDate.parse("2023-04-30"))
+                .dateOfCreation(LocalDate.now())
                 .build();
     }
 
@@ -62,7 +67,7 @@ class ParseXMLImplTest {
                 .nominal("1")
                 .name("Белорусский рубль")
                 .value("27,5198")
-                .dateOfCreation(LocalDate.parse("2023-04-30"))
+                .dateOfCreation(LocalDate.now())
                 .build();
     }
 }

@@ -27,14 +27,14 @@ public class ParseXMLImpl implements ParseXML {
 
     @Override
     public List<Currency> parseCurrenciesFromCBR(String parsePath) {
-        log.info("Begin parse currencies from cbr");
+        log.info("Begin parse currencies from path {" + parsePath + "}");
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
         dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
         try {
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new InputSource((parsePath)));
+            Document doc = db.parse(new InputSource(parsePath));
             doc.getDocumentElement().normalize();
 
             NodeList nodeList = doc.getElementsByTagName("Valute");
