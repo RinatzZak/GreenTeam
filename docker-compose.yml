@@ -2,7 +2,7 @@ version: '3.8'
 services:
 
   goal-server:
-    build: goal-service
+    build: goal-service/
     image: goal-service
     container_name: goal-server
     depends_on:
@@ -10,12 +10,16 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://goal-db:5432/goal-db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://goal-db:6541/goal-db
+    # - SPRING_DATASOURCE_URL=jdbc:postgresql://goal-db:5432/goal-db
 
 
   goal-db:
     image: postgres:14-alpine
     container_name: goal-db
+    command: postgres -c port=6541
+    volumes:
+      - var/lib/postgresql/data
     ports:
       - "6541:5432"
     environment:
@@ -25,7 +29,7 @@ services:
 
 
   currency-server:
-    build: CurrencyService
+    build: CurrencyService/
     image: currency-service
     container_name: CurrencyService
     depends_on:
@@ -33,12 +37,16 @@ services:
     ports:
       - "9091:9091"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://currency-db:5433/currency-db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://currency-db:6542/currency-db
+    #  - SPRING_DATASOURCE_URL=jdbc:postgresql://currency-db:5433/currency-db
 
 
   currency-db:
     image: postgres:14-alpine
     container_name: currency-db
+    command: postgres -c port=6542
+    volumes:
+      - var/lib/postgresql/data
     ports:
       - "6542:5432"
     environment:
@@ -47,7 +55,7 @@ services:
       - POSTGRES_PASSWORD=admin
 
   saving-server:
-    build: SavingService
+    build: SavingService/
     image: saving-service
     container_name: saving-server
     depends_on:
@@ -55,15 +63,27 @@ services:
     ports:
       - "9092:9092"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://saving-db:5432/saving-db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://saving-db:6543/saving-db
+    #  - SPRING_DATASOURCE_URL=jdbc:postgresql://saving-db:5432/saving-db
 
 
   saving-db:
     image: postgres:14-alpine
     container_name: saving-db
+    command: postgres -c port=6543
+    volumes:
+      - var/lib/postgresql/data
     ports:
       - "6543:5432"
     environment:
       - POSTGRES_DB=saving-db
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
+
+  bot-server:
+    build: GreenTeamTelegramBot/
+    image: greenteamtelegrambot
+    container_name: greenteamtelegrambot
+    ports:
+      - "8080:8080"
+

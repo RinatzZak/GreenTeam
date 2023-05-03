@@ -1,3 +1,3 @@
-FROM amazoncorretto:11-alpine-jdk
-COPY *.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM openjdk:11
+COPY target/CurrencyService-1.0-SNAPSHOT-shaded.jar currency.jar
+ENTRYPOINT ["java", "-jar", "/currency.jar"]
