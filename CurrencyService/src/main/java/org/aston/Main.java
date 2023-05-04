@@ -22,6 +22,6 @@ public class Main {
         }
         System.out.println(currency.getCharCode() + " - " + currency.getValue() + " - " + currency.getDateOfCreation() );
         CurrencySoapControllerImpl controller = new CurrencySoapControllerImpl(service);
-        controller.publishEndpoint("http://localhost:8082/currency");
+        controller.publishEndpoint("http://0.0.0.0:8082/currency");
     }
 }
