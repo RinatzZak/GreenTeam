@@ -8,7 +8,6 @@
         <groupId>org.aston</groupId>
         <artifactId>GreenTeam</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <artifactId>GreenTeamTelegramBot</artifactId>
