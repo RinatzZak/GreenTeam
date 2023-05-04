@@ -33,7 +33,7 @@ services:
     depends_on:
       - currency-db
     ports:
-      - "9091:9091"
+      - "8082:8082"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://currency-db:6542/currency-db
     #  - SPRING_DATASOURCE_URL=jdbc:postgresql://currency-db:5433/currency-db
