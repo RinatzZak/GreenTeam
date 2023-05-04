@@ -9,6 +9,7 @@ import org.aston.greenteam.gateway.constant.bot.GoalCommandEnum;
 import org.aston.greenteam.gateway.constant.bot.MainButtonEnum;
 import org.aston.greenteam.gateway.constant.bot.SavingButtonEnum;
 import org.aston.greenteam.gateway.constant.bot.SavingCommandEnum;
+import org.aston.greenteam.gateway.converter.ConverterSoapClient;
 import org.aston.greenteam.gateway.converter.ConvertingModel;
 import org.aston.greenteam.gateway.goal.GoalModel;
 import org.aston.greenteam.gateway.handler.CallbackQueryHandler;
@@ -50,18 +51,21 @@ public class Bot extends TelegramLongPollingBot {
     private Map<Long, GoalModel> goalModelMap = new HashMap<>();
     private Map<Long, SavingModel> savingModelMap = new HashMap<>();
 
+    private final ConverterSoapClient converterSoapClient;
+
     public Bot(
             TelegramBotsApi telegramBotsApi,
             @Value("${bot.name}") String botUsername,
             @Value("${bot.token}") String botToken,
             ReplyKeyboardMaker replyKeyboardMaker,
             InlineKeyboardMaker inlineKeyboardMaker,
-            CallbackQueryHandler callbackQueryHandler) throws TelegramApiException {
+            CallbackQueryHandler callbackQueryHandler, ConverterSoapClient converterSoapClient) throws TelegramApiException {
         this.botUsername = botUsername;
         this.botToken = botToken;
         this.replyKeyboardMaker = replyKeyboardMaker;
         this.inlineKeyboardMaker = inlineKeyboardMaker;
         this.callbackQueryHandler = callbackQueryHandler;
+        this.converterSoapClient = converterSoapClient;
         telegramBotsApi.registerBot(this);
     }
 
@@ -525,11 +529,12 @@ public class Bot extends TelegramLongPollingBot {
 
         //TODO логика общения с микросервисом по конвертации валюты
 
-        Long sum = Long.parseLong(text);
-        Long result = sum / 10;
+        Double sum = Double.parseDouble(text);
+        //Double result = sum / 10;
 
         convertingModel.setBaseCurrSum(sum);
-        convertingModel.setQuotedCurrSum(result);
+        //convertingModel.setQuotedCurrSum(result);
+        convertingModel = converterSoapClient.convert(convertingModel);
 
         response.setText(convertingModel.toString());
         sendAnswerMessage(response);
