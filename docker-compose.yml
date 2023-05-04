@@ -18,8 +18,6 @@ services:
     image: postgres:14-alpine
     container_name: goal-db
     command: postgres -c port=6541
-    volumes:
-      - var/lib/postgresql/data
     ports:
       - "6541:5432"
     environment:
@@ -45,8 +43,6 @@ services:
     image: postgres:14-alpine
     container_name: currency-db
     command: postgres -c port=6542
-    volumes:
-      - var/lib/postgresql/data
     ports:
       - "6542:5432"
     environment:
@@ -71,8 +67,6 @@ services:
     image: postgres:14-alpine
     container_name: saving-db
     command: postgres -c port=6543
-    volumes:
-      - var/lib/postgresql/data
     ports:
       - "6543:5432"
     environment:
