@@ -9,8 +9,8 @@ import org.aston.greenteam.gateway.constant.bot.CurrencyEnum;
 public class ConvertingModel {
     private CurrencyEnum baseCurr;
     private CurrencyEnum quotedCurr;
-    private Long baseCurrSum;
-    private Long quotedCurrSum;
+    private Double baseCurrSum;
+    private Double quotedCurrSum;
 
     public ConvertingModel() {
     }
